@@ -13,10 +13,9 @@ chown $DOCKER_UID:$DOCKER_UID imgs
 docker build -t $IMAGE .
 
 docker run -t --rm -v $(pwd)/imgs:/imgs:z $IMAGE /bin/bash -c "\
-git clone https://github.com/harinworks/yocto-pitrezor.git && \
+git clone -b "$TAG" --depth 1 https://github.com/harinworks/yocto-pitrezor.git && \
 cd yocto-pitrezor && \
-git checkout $TAG && \
-git submodule update --init --recursive && \
+git submodule update --init --recursive --depth 1 && \
 sed -i -e 's/^MACHINE.*/MACHINE ??= \"$MACHINE\"/' build/conf/local.conf && \
 . poky/oe-init-build-env build && \
 bitbake pitrezor-image && \
