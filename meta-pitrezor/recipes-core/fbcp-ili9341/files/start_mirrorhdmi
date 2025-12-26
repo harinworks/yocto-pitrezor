@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cd /boot
+dos2unix -n pitrezor.config /var/volatile/pitrezor.config.fbcp
+. /var/volatile/pitrezor.config.fbcp
+
+if [ "$TREZOR_MIRRORHDMI" -eq 1 ]; then
+  sleep 1
+  exec /usr/bin/fbcp-ili9341
+fi

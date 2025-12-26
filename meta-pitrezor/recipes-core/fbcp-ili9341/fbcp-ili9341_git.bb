@@ -1,0 +1,34 @@
+SUMMARY = "fbcp-ili9341 application"
+
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE.txt;md5=e07269cd84249a454c5d152cf5176dd5"
+
+DEPENDS = "userland"
+RDEPENDS:${PN} = "userland"
+
+SRC_URI = "git://github.com/juj/fbcp-ili9341.git;branch=master \
+           file://start_mirrorhdmi \
+          "
+
+SRCREV = "d0ebacf7c1f30b19b50997ebb67ba4f70ab95368"
+
+S = "${WORKDIR}/git"
+
+inherit cmake
+
+EXTRA_OECMAKE = "-DWAVESHARE_ST7789VW_HAT=ON \
+                 -DSPI_BUS_CLOCK_DIVISOR=30 \
+                 -DBACKLIGHT_CONTROL=ON \
+                 -DSTATISTICS=0 \
+                 -DUSE_DMA_TRANSFERS=OFF \
+                "
+
+do_configure:prepend() {
+    echo 'target_link_libraries(fbcp-ili9341 vchostif)' >> "${S}/CMakeLists.txt"
+}
+
+do_install() {
+    install -d ${D}${bindir}
+    install -m 0755 ${WORKDIR}/start_mirrorhdmi ${D}${bindir}
+    install -m 0755 ${B}/fbcp-ili9341 ${D}${bindir}
+}
