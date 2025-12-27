@@ -2,10 +2,10 @@
 include recipes-core/images/core-image-minimal.bb
 
 # Include modules in rootfs
-IMAGE_INSTALL += " \
-	kernel-module-gadgetfs \
-	kernel-module-dwc2 \
-        "
+IMAGE_INSTALL += "\
+  kernel-module-gadgetfs \
+  kernel-module-dwc2 \
+  "
 
 IMAGE_INSTALL:append:raspberrypi4 = " kernel-module-v3d libudev "
 

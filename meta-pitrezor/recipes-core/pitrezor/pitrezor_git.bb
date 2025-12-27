@@ -37,12 +37,12 @@ do_compile() {
 }
 
 do_install() {
-    install -d ${D}${bindir}
-    install -d ${D}${datadir}/pitrezor
-    install -m 0755 ${WORKDIR}/start_pitrezor ${D}${bindir}
-    install -m 0766 ${B}/legacy/firmware/trezor.elf ${D}${bindir}/pitrezor
-    install -m 0444 ${WORKDIR}/pitrezor.config ${D}${datadir}/pitrezor
-    unix2dos ${D}${datadir}/pitrezor/pitrezor.config
+  install -d ${D}${bindir}
+  install -d ${D}${datadir}/pitrezor
+  install -m 0755 ${WORKDIR}/start_pitrezor ${D}${bindir}
+  install -m 0755 ${B}/legacy/firmware/trezor.elf ${D}${bindir}/pitrezor
+  install -m 0644 ${WORKDIR}/pitrezor.config ${D}${datadir}/pitrezor
+  unix2dos ${D}${datadir}/pitrezor/pitrezor.config
 }
 
 FILES_${PN} = "${bindir} ${datadir}/pitrezor"
