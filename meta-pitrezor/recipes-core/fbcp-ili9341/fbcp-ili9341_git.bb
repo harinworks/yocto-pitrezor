@@ -6,11 +6,11 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE.txt;md5=e07269cd84249a454c5d15
 DEPENDS = "userland"
 RDEPENDS:${PN} = "userland"
 
-SRC_URI = "git://github.com/juj/fbcp-ili9341.git;branch=master \
+SRC_URI = "git://github.com/zxfishhack/fbcp-ili9341.git;branch=rpi2w-64bit-port \
            file://start_mirrorhdmi \
           "
 
-SRCREV = "d0ebacf7c1f30b19b50997ebb67ba4f70ab95368"
+SRCREV = "0840eb3da2f514f0abaf09293292b8bbaf335943"
 
 S = "${WORKDIR}/git"
 
@@ -21,7 +21,11 @@ EXTRA_OECMAKE = "-DWAVESHARE_ST7789VW_HAT=ON \
                  -DBACKLIGHT_CONTROL=ON \
                  -DSTATISTICS=0 \
                  -DUSE_DMA_TRANSFERS=OFF \
+                 -DUSE_VCSM_CMA=OFF \
                 "
+EXTRA_OECMAKE:append:raspberrypi0-wifi = " -DARMV6Z=ON"
+EXTRA_OECMAKE:append:raspberrypi4-64 = " -DAARCH64=ON -DARMV8A=ON"
+EXTRA_OECMAKE:append:raspberrypi0-2w-64 = " -DAARCH64=ON -DARMV8A=ON"
 
 do_configure:prepend() {
     echo 'target_link_libraries(fbcp-ili9341 vchostif)' >> "${S}/CMakeLists.txt"
